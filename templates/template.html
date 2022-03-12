@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-7">
+<meta http-equiv=”refresh” content=”600" />
+<style>
+body {
+  margin: 0;
+  background-color: black; }
+
+.text-scroll {
+  margin: 0;
+  font-size: 30px;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  overflow: hidden; }
+  .text-scroll p {
+    width: max-content;
+    margin: 0;
+    margin-left: 100%;
+    white-space: nowrap;
+    animation: ts 350s linear infinite;
+    user-select: none; }
+
+@keyframes ts {
+  0% {
+    transform: translateX(calc(0% - 0vw)); }
+  100% {
+    transform: translateX(calc(-100% - 100vw)); } }
+
+</style>
+</head>
+<body>
+<h1 class="text-scroll">
+    <p>{{NEWS}}</p>
+</h1>
+</body>
+</html>
