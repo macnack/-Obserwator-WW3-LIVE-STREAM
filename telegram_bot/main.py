@@ -6,18 +6,20 @@ from telegram.ext import Updater, CallbackContext, CommandHandler, MessageHandle
 import requests
 import json
 import os
-
+import pathlib
 
 url_getFile = "https://api.telegram.org/bot%s/getFile" % TOKEN
-
+working_dir = pathlib.Path().absolute()
+movies_dir = pathlib.PurePath(working_dir, 'movies')
+images_dir = pathlib.PurePath(working_dir, 'images')
 headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
-if os.path.isdir('./movies') is False:
-    os.mkdir('./movies')
-if os.path.isdir('./images') is False:
-    os.mkdir('./images')
+if os.path.isdir(movies_dir) is False:
+    os.mkdir(movies_dir)
+if os.path.isdir(images_dir) is False:
+    os.mkdir(images_dir)
 
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Jestem obserawtorem WW3.")
@@ -29,7 +31,7 @@ def get_video(update: Update, context: CallbackContext):
     response = requests.get('https://api.telegram.org/file/bot%s/%s' % (TOKEN, file_path))
     filename_data = time.strftime("%d_%m_%H:%M:%S", time.gmtime())
     context.bot.send_message(chat_id=update.effective_chat.id, text='Dodane video: ' + filename_data)
-    open('./movies/' + filename_data + '.mp4', 'wb').write(response.content)
+    open(r'./movies/' + filename_data + '.mp4', 'wb').write(response.content)
 
 
 def get_image(update: Update, context: CallbackContext):
