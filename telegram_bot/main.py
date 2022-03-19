@@ -21,6 +21,7 @@ if os.path.isdir(movies_dir) is False:
 if os.path.isdir(images_dir) is False:
     os.mkdir(images_dir)
 
+
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Jestem obserawtorem WW3.")
 
@@ -31,15 +32,18 @@ def get_video(update: Update, context: CallbackContext):
     response = requests.get('https://api.telegram.org/file/bot%s/%s' % (TOKEN, file_path))
     filename_data = time.strftime("%d_%m_%H_%M_%S", time.gmtime())
     context.bot.send_message(chat_id=update.effective_chat.id, text='Dodane video: ' + filename_data)
-    open(r'./movies/' + filename_data + '.mp4', 'wb').write(response.content)
+    file_dir = pathlib.PurePath(movies_dir, filename_data + '.mp4')
+    open(file_dir, 'wb').write(response.content)
 
 
 def get_image(update: Update, context: CallbackContext):
-    response = requests.request("POST", url_getFile, json={'file_id': update.message.photo[-1].file_id}, headers=headers)
+    response = requests.request("POST", url_getFile, json={'file_id': update.message.photo[-1].file_id},
+                                headers=headers)
     file_path = json.loads(response.text)['result']['file_path']
     response = requests.get('https://api.telegram.org/file/bot%s/%s' % (TOKEN, file_path))
     filename_data = time.strftime("%d_%m_%H_%M_%S", time.gmtime())
-    open('./images/' + filename_data + '.jpg', 'wb').write(response.content)
+    file_dir = pathlib.PurePath(images_dir, filename_data + '.mp4')
+    open(file_dir, 'wb').write(response.content)
 
 
 updater = Updater(token=TOKEN, use_context=True)
