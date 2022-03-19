@@ -1,11 +1,12 @@
 import time
-
 from settings import TOKEN
 import logging
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
 from telegram.ext import Updater, CallbackContext, CommandHandler, MessageHandler, Filters, InlineQueryHandler
 import requests
 import json
+import os
+
 
 url_getFile = "https://api.telegram.org/bot%s/getFile" % TOKEN
 
@@ -13,7 +14,10 @@ headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
-
+if os.path.isdir('./movies') is False:
+    os.mkdir('./movies')
+if os.path.isdir('./images') is False:
+    os.mkdir('./images')
 
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Jestem obserawtorem WW3.")
