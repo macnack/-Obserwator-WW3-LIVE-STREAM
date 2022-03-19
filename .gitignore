@@ -1,3 +1,8 @@
 .DS_Store
 .gitattributes
 *.txt
+telegram_bot/movies/19_03_16:12:27
+*.mp4
+*.jpg
+__pycache__
+.idea
